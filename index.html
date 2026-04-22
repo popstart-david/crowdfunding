@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crowdfunding Pre-Launch Action Plan — Popstart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ─────────────────────────────────────────────────── */
+:root {
+  --purple:       #5B2D8E;
+  --purple-mid:   #7B3FB5;
+  --purple-light: #EDE7F6;
+  --purple-pale:  #F8F4FD;
+  --orange:       #E8631A;
+  --orange-light: #FFF3E0;
+  --orange-pale:  #FFFAF5;
+  --teal:         #0E7C7B;
+  --teal-light:   #E0F4F4;
+  --ink:          #1C1C2E;
+  --ink-mid:      #3D3D5C;
+  --ink-soft:     #6B6B8A;
+  --line:         #E8E8F0;
+  --white:        #FFFFFF;
+  --bg:           #F7F6FB;
+  --chat-w:       760px;
+  --radius:       14px;
+  --radius-sm:    8px;
+  --shadow:       0 2px 12px rgba(91,45,142,.10);
+  --shadow-lg:    0 8px 32px rgba(91,45,142,.16);
+}
+
+/* ── RESET ──────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── TOPBAR ─────────────────────────────────────────────────── */
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; gap: 12px;
+  padding: 0 24px;
+  height: 58px;
+  box-shadow: 0 1px 6px rgba(91,45,142,.06);
+}
+.topbar-logo {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.2rem;
+  color: var(--purple);
+  letter-spacing: -.5px;
+}
+.topbar-divider { width: 1px; height: 22px; background: var(--line); }
+.topbar-title {
+  font-size: .85rem;
+  font-weight: 500;
+  color: var(--ink-mid);
+}
+.topbar-badge {
+  margin-left: auto;
+  font-size: .75rem;
+  font-weight: 600;
+  color: var(--orange);
+  background: var(--orange-light);
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid #F5C49A;
+}
+.topbar-module {
+  font-size: .75rem;
+  color: var(--ink-soft);
+  margin-left: 2px;
+}
+
+/* ── LAYOUT ─────────────────────────────────────────────────── */
+.layout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr minmax(0, var(--chat-w)) 340px;
+  gap: 0;
+  max-width: 1380px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 28px 24px;
+  align-items: start;
+}
+
+/* ── SIDEBAR LEFT: Progress ─────────────────────────────────── */
+.sidebar-left {
+  padding: 0 24px 0 0;
+  position: sticky;
+  top: 86px;
+}
+.progress-label {
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 14px;
+}
+.progress-track {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.progress-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 0;
+  cursor: default;
+  opacity: .45;
+  transition: opacity .25s;
+}
+.progress-step.active { opacity: 1; }
+.progress-step.done { opacity: .75; }
+.step-connector {
+  display: flex; flex-direction: column; align-items: center; gap: 0;
+  width: 20px; flex-shrink: 0;
+}
+.step-dot {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--line);
+  background: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .6rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+  transition: all .25s;
+  flex-shrink: 0;
+}
+.progress-step.active .step-dot {
+  border-color: var(--purple);
+  background: var(--purple);
+  color: var(--white);
+  box-shadow: 0 0 0 4px var(--purple-light);
+}
+.progress-step.done .step-dot {
+  border-color: var(--teal);
+  background: var(--teal);
+  color: var(--white);
+}
+.step-line {
+  width: 2px;
+  height: 20px;
+  background: var(--line);
+  margin: 2px 0;
+}
+.progress-step.done .step-line { background: var(--teal); opacity: .4; }
+.step-info { flex: 1; padding-top: 1px; }
+.step-name {
+  font-size: .8rem;
+  font-weight: 500;
+  color: var(--ink-mid);
+  line-height: 1.2;
+}
+.progress-step.active .step-name { color: var(--purple); font-weight: 600; }
+.step-sub {
+  font-size: .7rem;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+
+/* ── CHAT AREA ──────────────────────────────────────────────── */
+.chat-area {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-height: 60vh;
+}
+
+/* ── MESSAGES ───────────────────────────────────────────────── */
+.message {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 6px;
+  animation: msgIn .3s ease both;
+}
+@keyframes msgIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.msg-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--purple);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Serif Display', serif;
+  font-size: .8rem;
+  color: var(--white);
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.msg-avatar.user-avatar {
+  background: var(--ink-mid);
+  font-family: 'DM Sans', sans-serif;
+  font-size: .7rem;
+  font-weight: 600;
+}
+.message.user { flex-direction: row-reverse; }
+.message.user .msg-bubble {
+  background: var(--purple);
+  color: var(--white);
+  border-radius: var(--radius) var(--radius-sm) var(--radius) var(--radius);
+}
+.msg-bubble {
+  max-width: 82%;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm) var(--radius) var(--radius) var(--radius);
+  padding: 12px 16px;
+  font-size: .9rem;
+  line-height: 1.6;
+  box-shadow: var(--shadow);
+}
+.msg-bubble p { margin-bottom: 8px; }
+.msg-bubble p:last-child { margin-bottom: 0; }
+.msg-bubble strong { font-weight: 600; }
+
+/* Typing indicator */
+.typing-indicator {
+  display: flex; gap: 10px; align-items: center;
+  margin-bottom: 6px;
+}
+.typing-dots {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm) var(--radius) var(--radius) var(--radius);
+  padding: 14px 18px;
+  display: flex; gap: 5px; align-items: center;
+  box-shadow: var(--shadow);
+}
+.typing-dots span {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--ink-soft);
+  animation: blink 1.2s infinite;
+}
+.typing-dots span:nth-child(2) { animation-delay: .2s; }
+.typing-dots span:nth-child(3) { animation-delay: .4s; }
+@keyframes blink {
+  0%, 80%, 100% { opacity: .2; transform: scale(1); }
+  40% { opacity: 1; transform: scale(1.2); }
+}
+
+/* ── INPUT WIDGETS ──────────────────────────────────────────── */
+.input-widget {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin: 10px 0 16px 42px;
+  box-shadow: var(--shadow);
+  animation: msgIn .3s ease both;
+}
+.input-widget-label {
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 12px;
+}
+/* Chip selects */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  padding: 7px 15px;
+  border-radius: 30px;
+  border: 1.5px solid var(--line);
+  background: var(--bg);
+  font-size: .85rem;
+  font-weight: 500;
+  color: var(--ink-mid);
+  cursor: pointer;
+  transition: all .18s;
+  user-select: none;
+}
+.chip:hover {
+  border-color: var(--purple-mid);
+  color: var(--purple);
+  background: var(--purple-pale);
+}
+.chip.selected {
+  border-color: var(--purple);
+  background: var(--purple);
+  color: var(--white);
+}
+.chip.multi.selected {
+  border-color: var(--purple-mid);
+  background: var(--purple-light);
+  color: var(--purple);
+}
+/* Number input */
+.number-input-wrap {
+  display: flex; align-items: center; gap: 10px;
+}
+.currency-prefix {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+.number-field {
+  font-size: 1.2rem;
+  font-weight: 600;
+  font-family: 'DM Serif Display', serif;
+  color: var(--ink);
+  border: none;
+  border-bottom: 2px solid var(--purple-light);
+  background: transparent;
+  padding: 6px 4px;
+  width: 180px;
+  outline: none;
+  transition: border-color .2s;
+}
+.number-field:focus { border-color: var(--purple); }
+.number-field-hint {
+  font-size: .75rem;
+  color: var(--ink-soft);
+  margin-top: 8px;
+}
+/* Text area */
+.text-area-field {
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  font-size: .9rem;
+  color: var(--ink);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  padding: 10px 14px;
+  resize: vertical;
+  min-height: 80px;
+  outline: none;
+  transition: border-color .2s;
+  line-height: 1.5;
+}
+.text-area-field:focus { border-color: var(--purple); background: var(--white); }
+/* Submit button */
+.widget-submit {
+  margin-top: 14px;
+  padding: 10px 24px;
+  border-radius: 30px;
+  background: var(--purple);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: .85rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all .18s;
+  box-shadow: 0 3px 10px rgba(91,45,142,.25);
+}
+.widget-submit:hover { background: var(--purple-mid); transform: translateY(-1px); }
+.widget-submit:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+
+/* Gap probe */
+.gap-probe {
+  background: var(--orange-pale);
+  border: 1px solid #F5C49A;
+  border-left: 3px solid var(--orange);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 11px 14px;
+  font-size: .85rem;
+  color: var(--ink-mid);
+  margin: 6px 0 6px 42px;
+  animation: msgIn .3s ease both;
+  line-height: 1.55;
+}
+.gap-probe-label {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 5px;
+}
+
+/* ── SIDEBAR RIGHT: Carousel Cards ──────────────────────────── */
+.sidebar-right {
+  padding: 0 0 0 24px;
+  position: sticky;
+  top: 86px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.cards-label {
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 2px;
+}
+.card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: box-shadow .25s;
+}
+.card:hover { box-shadow: var(--shadow-lg); }
+.card-header {
+  padding: 10px 14px;
+  background: var(--purple-pale);
+  border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; gap: 8px;
+}
+.card-num {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--purple-light);
+  border: 1.5px solid var(--purple);
+  font-size: .65rem;
+  font-weight: 700;
+  color: var(--purple);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.card-num.populated {
+  background: var(--purple);
+  color: var(--white);
+  border-color: var(--purple);
+}
+.card-title {
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--ink-mid);
+}
+.card-body {
+  padding: 12px 14px;
+  min-height: 72px;
+}
+.card-placeholder {
+  font-size: .78rem;
+  color: var(--ink-soft);
+  font-style: italic;
+  line-height: 1.5;
+}
+.card-content {
+  font-size: .78rem;
+  color: var(--ink-mid);
+  line-height: 1.55;
+  display: none;
+}
+.card-content.visible { display: block; }
+.card-content-row {
+  display: flex; gap: 6px; margin-bottom: 6px;
+  align-items: flex-start;
+}
+.card-content-label {
+  font-weight: 600;
+  color: var(--purple);
+  min-width: 70px;
+  font-size: .73rem;
+  flex-shrink: 0;
+}
+.card-content-val {
+  font-size: .73rem;
+  color: var(--ink-mid);
+  line-height: 1.4;
+}
+.card-tag {
+  display: inline-block;
+  font-size: .68rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 20px;
+  margin: 2px 2px 0 0;
+}
+.card-tag.purple { background: var(--purple-light); color: var(--purple); }
+.card-tag.teal { background: var(--teal-light); color: var(--teal); }
+.card-tag.orange { background: var(--orange-light); color: var(--orange); }
+
+/* Tier table in card */
+.tier-table { width: 100%; border-collapse: collapse; margin-top: 4px; }
+.tier-table th {
+  font-size: .65rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .05em; color: var(--ink-soft);
+  padding: 4px 6px; border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+.tier-table td {
+  font-size: .72rem; color: var(--ink-mid);
+  padding: 5px 6px; border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.tier-table tr:last-child td { border-bottom: none; }
+.tier-label {
+  font-weight: 600; font-size: .65rem;
+  padding: 2px 7px; border-radius: 10px;
+  display: inline-block;
+}
+.tier-label.lower { background: #E8F5E9; color: #2E7D32; }
+.tier-label.main  { background: var(--purple-light); color: var(--purple); }
+.tier-label.prem  { background: #FFF8E1; color: #F57F17; }
+
+/* Timeline list in card */
+.timeline-list { list-style: none; margin-top: 4px; }
+.timeline-list li {
+  display: flex; gap: 8px; align-items: flex-start;
+  padding: 5px 0; border-bottom: 1px solid var(--line);
+  font-size: .72rem; color: var(--ink-mid);
+}
+.timeline-list li:last-child { border-bottom: none; }
+.tl-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--purple); flex-shrink: 0;
+  margin-top: 5px;
+}
+.tl-dot.orange { background: var(--orange); }
+.tl-dot.teal { background: var(--teal); }
+
+/* ── COMPLETE PANEL ─────────────────────────────────────────── */
+.complete-panel {
+  background: linear-gradient(135deg, var(--purple-pale), var(--white));
+  border: 1px solid var(--purple-light);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin: 20px 0 0 42px;
+  text-align: center;
+  display: none;
+  animation: msgIn .4s ease both;
+}
+.complete-icon {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+}
+.complete-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.25rem;
+  color: var(--purple);
+  margin-bottom: 6px;
+}
+.complete-sub {
+  font-size: .85rem;
+  color: var(--ink-soft);
+  margin-bottom: 18px;
+  line-height: 1.55;
+}
+.complete-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.btn-primary {
+  padding: 10px 22px;
+  border-radius: 30px;
+  background: var(--purple);
+  color: var(--white);
+  font-size: .85rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all .18s;
+}
+.btn-primary:hover { background: var(--purple-mid); }
+.btn-secondary {
+  padding: 10px 22px;
+  border-radius: 30px;
+  background: transparent;
+  color: var(--purple);
+  font-size: .85rem;
+  font-weight: 600;
+  border: 2px solid var(--purple-light);
+  cursor: pointer;
+  transition: all .18s;
+}
+.btn-secondary:hover { border-color: var(--purple); background: var(--purple-pale); }
+
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .layout { grid-template-columns: 0 1fr 300px; }
+  .sidebar-left { display: none; }
+}
+@media (max-width: 780px) {
+  .layout {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+  .sidebar-left { display: none; }
+  .sidebar-right {
+    padding: 0;
+    position: static;
+    margin-top: 28px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <span class="topbar-logo">Popstart</span>
+  <div class="topbar-divider"></div>
+  <span class="topbar-title">Crowdfunding Pre-Launch Action Plan</span>
+  <span class="topbar-module">Module 3 — Funding</span>
+  <span class="topbar-badge">20–35 min</span>
+</header>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- LEFT: Step progress -->
+  <aside class="sidebar-left">
+    <div class="progress-label">Session Progress</div>
+    <div class="progress-track" id="progressTrack">
+      <!-- Steps injected by JS -->
+    </div>
+  </aside>
+
+  <!-- CENTER: Chat -->
+  <main class="chat-area" id="chatArea">
+    <!-- Messages injected by JS -->
+    <div id="typingIndicator" class="typing-indicator" style="display:none">
+      <div class="msg-avatar" style="background:var(--purple)">P</div>
+      <div class="typing-dots"><span></span><span></span><span></span></div>
+    </div>
+    <div class="complete-panel" id="completePanel">
+      <div class="complete-icon">🎉</div>
+      <div class="complete-title">Your pre-launch plan is ready.</div>
+      <div class="complete-sub">All four deliverables are built and waiting in the panel to your right. Export, share, or bring this into your next session.</div>
+      <div class="complete-actions">
+        <button class="btn-primary" onclick="exportPlan()">Export Plan</button>
+        <button class="btn-secondary" onclick="startOver()">Start Over</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- RIGHT: Cards -->
+  <aside class="sidebar-right">
+    <div class="cards-label">Your Deliverables</div>
+
+    <div class="card" id="card1">
+      <div class="card-header">
+        <div class="card-num" id="card1num">1</div>
+        <span class="card-title">Campaign Brief</span>
+      </div>
+      <div class="card-body">
+        <div class="card-placeholder" id="card1placeholder">Your campaign brief will take shape here as we work through the basics.</div>
+        <div class="card-content" id="card1content"></div>
+      </div>
+    </div>
+
+    <div class="card" id="card2">
+      <div class="card-header">
+        <div class="card-num" id="card2num">2</div>
+        <span class="card-title">Committed Backers</span>
+      </div>
+      <div class="card-body">
+        <div class="card-placeholder" id="card2placeholder">Your backer strategy will be built here once we cover who is in your corner.</div>
+        <div class="card-content" id="card2content"></div>
+      </div>
+    </div>
+
+    <div class="card" id="card3">
+      <div class="card-header">
+        <div class="card-num" id="card3num">3</div>
+        <span class="card-title">Reward Tiers</span>
+      </div>
+      <div class="card-body">
+        <div class="card-placeholder" id="card3placeholder">Your reward tiers will be structured here once we define what you are offering.</div>
+        <div class="card-content" id="card3content"></div>
+      </div>
+    </div>
+
+    <div class="card" id="card4">
+      <div class="card-header">
+        <div class="card-num" id="card4num">4</div>
+        <span class="card-title">Launch Timeline</span>
+      </div>
+      <div class="card-body">
+        <div class="card-placeholder" id="card4placeholder">Your launch timeline will be waiting here when we are done.</div>
+        <div class="card-content" id="card4content"></div>
+      </div>
+    </div>
+
+  </aside>
+</div><!-- /layout -->
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   POPSTART — CROWDFUNDING PRE-LAUNCH ACTION PLAN
+   Interactive Chat Agent v1.0
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── STATE ──────────────────────────────────────────────────── */
+const state = {
+  step: 0,
+  answers: {},
+  currentWidget: null
+};
+
+/* ── STEP DEFINITIONS ───────────────────────────────────────── */
+const STEPS = [
+  { id: 'intro',       name: 'Welcome',          sub: 'About this session' },
+  { id: 'sectionA',   name: 'Campaign Foundation', sub: 'What you are raising' },
+  { id: 'sectionB',   name: 'Committed Backers',  sub: 'Your first supporters' },
+  { id: 'sectionC',   name: 'Reward Tiers',       sub: 'What backers receive' },
+  { id: 'sectionD',   name: 'Launch Timeline',    sub: 'Sequencing the launch' },
+  { id: 'complete',   name: 'Plan Ready',         sub: 'All four deliverables' },
+];
+
+/* ── SCRIPT ─────────────────────────────────────────────────── */
+const SCRIPT = [
+  /* 0 — Intro */
+  {
+    phase: 'intro',
+    type: 'agent',
+    messages: [
+      `<p>Welcome. I'm your <strong>Crowdfunding Pre-Launch Action Plan</strong> coach.</p>
+       <p>By the end of this session you'll have four ready-to-use deliverables: a campaign brief, a committed backer strategy, a reward tier structure, and a sequenced launch timeline.</p>
+       <p>Everything is built from your answers — nothing generic. Let's start with the campaign itself.</p>`
+    ],
+    next: 1
+  },
+  /* 1 — Campaign description */
+  {
+    phase: 'sectionA',
+    type: 'agent',
+    messages: [`<p>First — what are you raising money for? Give me a short description of your product, project, or cause. A few sentences is plenty.</p>`],
+    widget: {
+      type: 'textarea',
+      key: 'campaign_description',
+      placeholder: 'e.g. A line of sustainable running shoes made from recycled ocean plastic. We have a working prototype and are raising to fund our first production run of 500 units...',
+      submitLabel: 'That\'s it →'
+    },
+    next: 2
+  },
+  /* 2 — Why now */
+  {
+    phase: 'sectionA',
+    type: 'agent',
+    messages: [`<p>Good. Now tell me — why are you launching this campaign <em>now</em>? What's the timing tied to?</p>`],
+    widget: {
+      type: 'textarea',
+      key: 'raise_reason_now',
+      placeholder: 'e.g. We just finished our prototype and have early interest from 80 people on our waitlist. We want to validate demand before going to manufacturers...',
+      submitLabel: 'Continue →'
+    },
+    gap: {
+      trigger: () => true,
+      probe: null // shown inline after answer
+    },
+    next: 3
+  },
+  /* 3 — Funding goal */
+  {
+    phase: 'sectionA',
+    type: 'agent',
+    messages: [`<p>What's your funding goal — and how did you arrive at that number?</p>`],
+    widget: {
+      type: 'number',
+      key: 'funding_goal',
+      prefix: '$',
+      placeholder: '0',
+      hint: 'After entering, briefly explain how you calculated this (e.g. production costs, first-batch inventory).',
+      subKey: 'funding_goal_rationale',
+      subPlaceholder: 'How did you arrive at this figure?',
+      submitLabel: 'Set goal →'
+    },
+    next: 4
+  },
+  /* 4 — Platform */
+  {
+    phase: 'sectionA',
+    type: 'agent',
+    messages: [`<p>Which platform are you planning to use?</p>`],
+    widget: {
+      type: 'chips-single',
+      key: 'platform_preference',
+      options: [
+        { label: 'Kickstarter', value: 'Kickstarter' },
+        { label: 'Indiegogo', value: 'Indiegogo' },
+        { label: 'GoFundMe', value: 'GoFundMe' },
+        { label: 'Wefunder', value: 'Wefunder' },
+        { label: 'Republic', value: 'Republic' },
+        { label: 'Not sure yet', value: 'not_sure' },
+      ],
+      submitLabel: 'Confirm platform →'
+    },
+    next: 5
+  },
+  /* 5 — Coverage */
+  {
+    phase: 'sectionA',
+    type: 'agent',
+    messages: [`<p>What will the funds cover? Select all that apply.</p>`],
+    widget: {
+      type: 'chips-multi',
+      key: 'coverage_need',
+      options: [
+        { label: 'Product development', value: 'product_dev' },
+        { label: 'Inventory', value: 'inventory' },
+        { label: 'Marketing', value: 'marketing' },
+        { label: 'Equipment', value: 'equipment' },
+        { label: 'Team / hiring', value: 'team' },
+        { label: 'Operations', value: 'operations' },
+        { label: 'Other', value: 'other' },
+      ],
+      submitLabel: 'Continue →'
+    },
+    next: 6
+  },
+  /* 6 — Prior campaign experience */
+  {
+    phase: 'sectionA',
+    type: 'agent',
+    messages: [`<p>Have you run a crowdfunding campaign before?</p>`],
+    widget: {
+      type: 'chips-single',
+      key: 'prior_campaign_experience',
+      options: [
+        { label: 'Yes — and it worked', value: 'yes_success' },
+        { label: 'Yes — but it didn\'t hit goal', value: 'yes_fail' },
+        { label: 'No, first time', value: 'no' },
+        { label: 'No, but I\'ve backed others', value: 'no_backed' },
+      ],
+      submitLabel: 'Continue →'
+    },
+    next: 7,
+    afterFn: 'populateCard1'
+  },
+  /* 7 — Committed backers count */
+  {
+    phase: 'sectionB',
+    type: 'agent',
+    messages: [
+      `<p>Now let's talk about your first backers — the people who will back you on day one.</p>
+       <p>Here's something most first-time campaigners don't know: the platform algorithm rewards early momentum. <strong>Campaigns that hit 30% of their goal in the first 48 hours get promoted</strong> — meaning your pre-launch list matters more than your campaign page.</p>
+       <p>How many people have already told you they'll back the campaign when it goes live?</p>`
+    ],
+    widget: {
+      type: 'number',
+      key: 'committed_backers_count',
+      prefix: '',
+      placeholder: '0',
+      hint: 'Enter 0 if you haven\'t started building your list yet — that\'s what this section is for.',
+      submitLabel: 'Continue →'
+    },
+    next: 8
+  },
+  /* 8 — Backer networks */
+  {
+    phase: 'sectionB',
+    type: 'agent',
+    messages: [`<p>Who are your committed backers? Select all the groups that apply.</p>`],
+    widget: {
+      type: 'chips-multi',
+      key: 'backer_networks',
+      options: [
+        { label: 'Friends & family', value: 'friends_family' },
+        { label: 'Former colleagues', value: 'colleagues' },
+        { label: 'Existing customers', value: 'customers' },
+        { label: 'Industry contacts', value: 'industry' },
+        { label: 'Online community', value: 'online_community' },
+        { label: 'Email list', value: 'email_list' },
+        { label: 'Social following', value: 'social' },
+        { label: 'None yet', value: 'none' },
+      ],
+      submitLabel: 'These are my groups →'
+    },
+    next: 9
+  },
+  /* 9 — Network size */
+  {
+    phase: 'sectionB',
+    type: 'agent',
+    messages: [`<p>Roughly how many people can you personally reach across all those groups combined?</p>`],
+    widget: {
+      type: 'chips-single',
+      key: 'network_size_estimate',
+      options: [
+        { label: 'Under 50', value: 'under_50' },
+        { label: '50 – 200', value: '50_200' },
+        { label: '200 – 500', value: '200_500' },
+        { label: '500 – 1,000', value: '500_1000' },
+        { label: '1,000+', value: '1000_plus' },
+      ],
+      submitLabel: 'Continue →'
+    },
+    next: 10
+  },
+  /* 10 — Contact preference */
+  {
+    phase: 'sectionB',
+    type: 'agent',
+    messages: [`<p>How do you plan to reach your first backers when the time comes? Select all that apply.</p>`],
+    widget: {
+      type: 'chips-multi',
+      key: 'backer_contact_preference',
+      options: [
+        { label: 'Direct messages / DMs', value: 'dm' },
+        { label: 'Email', value: 'email' },
+        { label: 'Social post', value: 'social_post' },
+        { label: 'In-person / events', value: 'in_person' },
+        { label: 'Not sure yet', value: 'not_sure' },
+      ],
+      submitLabel: 'Continue →'
+    },
+    next: 11,
+    afterFn: 'populateCard2'
+  },
+  /* 11 — Lower tier */
+  {
+    phase: 'sectionC',
+    type: 'agent',
+    messages: [
+      `<p>Now let's build your reward tiers — what backers receive in exchange for their support.</p>
+       <p>We'll do three tiers. Start with your <strong>lower tier</strong> — something accessible that gets people in the door. Think: early access, a thank-you, a small sample, a digital reward. What would this look like, and what price range makes sense?</p>`
+    ],
+    widget: {
+      type: 'tier-input',
+      key: 'tier_lower',
+      tierName: 'Lower Tier',
+      tierClass: 'lower',
+      descPlaceholder: 'e.g. Digital thank-you kit + your name in the credits + early campaign updates',
+      pricePlaceholder: '15',
+      submitLabel: 'Set lower tier →'
+    },
+    next: 12
+  },
+  /* 12 — Main tier */
+  {
+    phase: 'sectionC',
+    type: 'agent',
+    messages: [`<p>Now your <strong>main tier</strong> — the one you're primarily selling the campaign on. This is what most backers will choose. What do they receive, and at what price?</p>`],
+    widget: {
+      type: 'tier-input',
+      key: 'tier_main',
+      tierName: 'Main Tier',
+      tierClass: 'main',
+      descPlaceholder: 'e.g. One pair of the limited first-edition shoes, 20% off retail, shipped 6 weeks after campaign closes',
+      pricePlaceholder: '85',
+      submitLabel: 'Set main tier →'
+    },
+    next: 13
+  },
+  /* 13 — Premium tier */
+  {
+    phase: 'sectionC',
+    type: 'agent',
+    messages: [`<p>Finally, your <strong>premium tier</strong> — something higher-value for your most committed backers. Could be early access, a bundle, a VIP experience, or a limited quantity item. What would resonate at this level?</p>`],
+    widget: {
+      type: 'tier-input',
+      key: 'tier_premium',
+      tierName: 'Premium Tier',
+      tierClass: 'prem',
+      descPlaceholder: 'e.g. Two pairs + co-design session with our team + name on the shoe lining (limited to 25 backers)',
+      pricePlaceholder: '200',
+      submitLabel: 'Set premium tier →'
+    },
+    next: 14,
+    afterFn: 'populateCard3'
+  },
+  /* 14 — Launch date */
+  {
+    phase: 'sectionD',
+    type: 'agent',
+    messages: [
+      `<p>Almost there — let's sequence your launch.</p>
+       <p>When are you planning to go live?</p>`
+    ],
+    widget: {
+      type: 'chips-single',
+      key: 'target_launch_date',
+      options: [
+        { label: 'This month', value: 'this_month' },
+        { label: '1 – 2 months out', value: '1_2_months' },
+        { label: '3 – 6 months out', value: '3_6_months' },
+        { label: 'Not sure yet', value: 'not_sure' },
+      ],
+      submitLabel: 'Continue →'
+    },
+    next: 15
+  },
+  /* 15 — Campaign duration */
+  {
+    phase: 'sectionD',
+    type: 'agent',
+    messages: [`<p>How long do you want the campaign to run?</p>`],
+    widget: {
+      type: 'chips-single',
+      key: 'campaign_duration',
+      options: [
+        { label: '15 days', value: '15' },
+        { label: '30 days', value: '30' },
+        { label: '45 days', value: '45' },
+        { label: '60 days', value: '60' },
+        { label: 'Not sure', value: 'not_sure' },
+      ],
+      submitLabel: 'Continue →'
+    },
+    next: 16
+  },
+  /* 16 — Prep time */
+  {
+    phase: 'sectionD',
+    type: 'agent',
+    messages: [`<p>How much prep time do you have before launch?</p>`],
+    widget: {
+      type: 'chips-single',
+      key: 'pre_launch_timeline_preference',
+      options: [
+        { label: 'Less than 2 weeks', value: 'lt_2wk' },
+        { label: '2 – 4 weeks', value: '2_4wk' },
+        { label: '1 – 3 months', value: '1_3mo' },
+        { label: '3+ months', value: '3mo_plus' },
+      ],
+      submitLabel: 'Continue →'
+    },
+    next: 17
+  },
+  /* 17 — Network contact order */
+  {
+    phase: 'sectionD',
+    type: 'agent',
+    messages: [`<p>Last question. In what order will you reach out to your networks — who goes first when you launch?</p>`],
+    widget: {
+      type: 'textarea',
+      key: 'network_contact_order',
+      placeholder: 'e.g. 1. Direct message my top 20 customers 3 days before launch. 2. Email my full list on launch day. 3. Social post 48 hours in...',
+      submitLabel: 'Finish & build plan →'
+    },
+    next: 18,
+    afterFn: 'populateCard4'
+  },
+  /* 18 — Complete */
+  {
+    phase: 'complete',
+    type: 'complete',
+    messages: [
+      `<p>Your pre-launch plan is built. Everything is in the panel to the right — review each card, export the full plan, or take it into your next Popstart session.</p>
+       <p>One thing to consider as a next step: if your funding goal needs a proper cost breakdown behind it, the <strong>Working Capital Estimator</strong> will build that with you.</p>`
+    ]
+  }
+];
+
+/* ── PROGRESS RENDER ─────────────────────────────────────────── */
+function renderProgress() {
+  const track = document.getElementById('progressTrack');
+  const phaseOrder = ['intro','sectionA','sectionB','sectionC','sectionD','complete'];
+  const currentPhase = SCRIPT[state.step] ? SCRIPT[state.step].phase : 'complete';
+  const currentPhaseIdx = phaseOrder.indexOf(currentPhase);
+
+  track.innerHTML = STEPS.map((s, i) => {
+    const phaseIdx = phaseOrder.indexOf(s.id);
+    const isDone = phaseIdx < currentPhaseIdx;
+    const isActive = s.id === currentPhase;
+    const isLast = i === STEPS.length - 1;
+    return `
+      <div class="progress-step ${isDone ? 'done' : ''} ${isActive ? 'active' : ''}">
+        <div class="step-connector">
+          <div class="step-dot">${isDone ? '✓' : i + 1}</div>
+          ${!isLast ? `<div class="step-line"></div>` : ''}
+        </div>
+        <div class="step-info">
+          <div class="step-name">${s.name}</div>
+          <div class="step-sub">${s.sub}</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+/* ── MESSAGE HELPERS ─────────────────────────────────────────── */
+function addAgentMsg(html) {
+  const chatArea = document.getElementById('chatArea');
+  const typing = document.getElementById('typingIndicator');
+  const completePanel = document.getElementById('completePanel');
+
+  const msg = document.createElement('div');
+  msg.className = 'message agent';
+  msg.innerHTML = `
+    <div class="msg-avatar">P</div>
+    <div class="msg-bubble">${html}</div>`;
+  chatArea.insertBefore(msg, typing);
+  scrollToBottom();
+}
+
+function addUserMsg(text) {
+  const chatArea = document.getElementById('chatArea');
+  const typing = document.getElementById('typingIndicator');
+  const msg = document.createElement('div');
+  msg.className = 'message user';
+  msg.innerHTML = `
+    <div class="msg-avatar user-avatar">You</div>
+    <div class="msg-bubble">${text}</div>`;
+  chatArea.insertBefore(msg, typing);
+  scrollToBottom();
+}
+
+function addGapProbe(text) {
+  const chatArea = document.getElementById('chatArea');
+  const typing = document.getElementById('typingIndicator');
+  const probe = document.createElement('div');
+  probe.className = 'gap-probe';
+  probe.innerHTML = `<div class="gap-probe-label">💡 Worth noting</div>${text}`;
+  chatArea.insertBefore(probe, typing);
+  scrollToBottom();
+}
+
+function showTyping(ms) {
+  return new Promise(resolve => {
+    document.getElementById('typingIndicator').style.display = 'flex';
+    scrollToBottom();
+    setTimeout(() => {
+      document.getElementById('typingIndicator').style.display = 'none';
+      resolve();
+    }, ms);
+  });
+}
+
+function scrollToBottom() {
+  setTimeout(() => window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'}), 50);
+}
+
+/* ── WIDGET RENDER ───────────────────────────────────────────── */
+function removeCurrentWidget() {
+  const existing = document.getElementById('activeWidget');
+  if (existing) existing.remove();
+}
+
+function renderWidget(widgetDef, onSubmit) {
+  removeCurrentWidget();
+  const chatArea = document.getElementById('chatArea');
+  const typing = document.getElementById('typingIndicator');
+
+  const container = document.createElement('div');
+  container.className = 'input-widget';
+  container.id = 'activeWidget';
+
+  if (widgetDef.type === 'chips-single') {
+    container.innerHTML = `
+      <div class="input-widget-label">Select one</div>
+      <div class="chips">
+        ${widgetDef.options.map(o => `<button class="chip" data-value="${o.value}">${o.label}</button>`).join('')}
+      </div>`;
+    chatArea.insertBefore(container, typing);
+    container.querySelectorAll('.chip').forEach(c => {
+      c.addEventListener('click', () => {
+        container.querySelectorAll('.chip').forEach(x => x.classList.remove('selected'));
+        c.classList.add('selected');
+        setTimeout(() => {
+          const val = c.dataset.value;
+          const label = c.textContent;
+          onSubmit({ value: val, label });
+        }, 220);
+      });
+    });
+  }
+
+  else if (widgetDef.type === 'chips-multi') {
+    container.innerHTML = `
+      <div class="input-widget-label">Select all that apply</div>
+      <div class="chips">
+        ${widgetDef.options.map(o => `<button class="chip multi" data-value="${o.value}">${o.label}</button>`).join('')}
+      </div>
+      <button class="widget-submit" id="multiSubmit" style="margin-top:14px">${widgetDef.submitLabel}</button>`;
+    chatArea.insertBefore(container, typing);
+    const submitBtn = container.querySelector('#multiSubmit');
+    container.querySelectorAll('.chip').forEach(c => {
+      c.addEventListener('click', () => {
+        if (c.dataset.value === 'none') {
+          container.querySelectorAll('.chip').forEach(x => { x.classList.remove('selected'); });
+          c.classList.toggle('selected');
+        } else {
+          container.querySelector('[data-value="none"]')?.classList.remove('selected');
+          c.classList.toggle('selected');
+        }
+        const anySelected = container.querySelectorAll('.chip.selected').length > 0;
+        submitBtn.disabled = !anySelected;
+      });
+    });
+    submitBtn.disabled = true;
+    submitBtn.addEventListener('click', () => {
+      const selected = [...container.querySelectorAll('.chip.selected')];
+      const values = selected.map(c => c.dataset.value);
+      const labels = selected.map(c => c.textContent);
+      onSubmit({ value: values, label: labels.join(', ') });
+    });
+  }
+
+  else if (widgetDef.type === 'number') {
+    container.innerHTML = `
+      <div class="input-widget-label">Enter a number</div>
+      <div class="number-input-wrap">
+        ${widgetDef.prefix ? `<span class="currency-prefix">${widgetDef.prefix}</span>` : ''}
+        <input type="number" class="number-field" id="numFieldMain" placeholder="${widgetDef.placeholder}" min="0">
+      </div>
+      ${widgetDef.hint ? `<div class="number-field-hint">${widgetDef.hint}</div>` : ''}
+      ${widgetDef.subKey ? `<textarea class="text-area-field" id="numFieldSub" placeholder="${widgetDef.subPlaceholder}" style="margin-top:12px;min-height:60px"></textarea>` : ''}
+      <button class="widget-submit" id="numSubmit">${widgetDef.submitLabel}</button>`;
+    chatArea.insertBefore(container, typing);
+    const submitBtn = container.querySelector('#numSubmit');
+    submitBtn.addEventListener('click', () => {
+      const mainVal = container.querySelector('#numFieldMain').value;
+      const subVal = widgetDef.subKey ? container.querySelector('#numFieldSub').value : null;
+      if (!mainVal && mainVal !== '0') return;
+      const display = widgetDef.prefix ? `${widgetDef.prefix}${Number(mainVal).toLocaleString()}` : mainVal;
+      onSubmit({ value: mainVal, subValue: subVal, label: display + (subVal ? ` — ${subVal}` : '') });
+    });
+  }
+
+  else if (widgetDef.type === 'textarea') {
+    container.innerHTML = `
+      <div class="input-widget-label">Your answer</div>
+      <textarea class="text-area-field" id="textareaField" placeholder="${widgetDef.placeholder}"></textarea>
+      <button class="widget-submit" id="taSubmit">${widgetDef.submitLabel}</button>`;
+    chatArea.insertBefore(container, typing);
+    container.querySelector('#taSubmit').addEventListener('click', () => {
+      const val = container.querySelector('#textareaField').value.trim();
+      if (!val) return;
+      onSubmit({ value: val, label: val.length > 80 ? val.slice(0, 80) + '…' : val });
+    });
+  }
+
+  else if (widgetDef.type === 'tier-input') {
+    container.innerHTML = `
+      <div class="input-widget-label">
+        <span class="tier-label ${widgetDef.tierClass}" style="font-size:.7rem">${widgetDef.tierName}</span>
+      </div>
+      <div style="margin-bottom:10px">
+        <div style="font-size:.75rem;color:var(--ink-soft);margin-bottom:6px;font-weight:500">What backers receive</div>
+        <textarea class="text-area-field" id="tierDesc" placeholder="${widgetDef.descPlaceholder}" style="min-height:70px"></textarea>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <span style="font-size:.75rem;color:var(--ink-soft);font-weight:500;min-width:65px">Price point</span>
+        <span class="currency-prefix">$</span>
+        <input type="number" class="number-field" id="tierPrice" placeholder="${widgetDef.pricePlaceholder}" min="1" style="width:100px">
+      </div>
+      <button class="widget-submit" id="tierSubmit">${widgetDef.submitLabel}</button>`;
+    chatArea.insertBefore(container, typing);
+    container.querySelector('#tierSubmit').addEventListener('click', () => {
+      const desc = container.querySelector('#tierDesc').value.trim();
+      const price = container.querySelector('#tierPrice').value;
+      if (!desc || !price) return;
+      onSubmit({ value: { desc, price }, label: `$${price} — ${desc.slice(0, 60)}…` });
+    });
+  }
+
+  scrollToBottom();
+}
+
+/* ── CARD POPULATION ─────────────────────────────────────────── */
+function populateCard1() {
+  const a = state.answers;
+  const coverageLabels = {
+    product_dev: 'Product dev', inventory: 'Inventory',
+    marketing: 'Marketing', equipment: 'Equipment',
+    team: 'Team', operations: 'Operations', other: 'Other'
+  };
+  const coverage = Array.isArray(a.coverage_need)
+    ? a.coverage_need.map(v => coverageLabels[v] || v).join(', ')
+    : (a.coverage_need || '—');
+
+  const platformNote = a.platform_preference === 'not_sure'
+    ? 'Not decided yet — worth reviewing all-or-nothing vs. flexible funding models'
+    : a.platform_preference === 'Kickstarter' || a.platform_preference === 'Republic'
+      ? `${a.platform_preference} <span style="color:var(--ink-soft);font-size:.68rem">(all-or-nothing model)</span>`
+      : a.platform_preference;
+
+  document.getElementById('card1placeholder').style.display = 'none';
+  document.getElementById('card1num').classList.add('populated');
+  const content = document.getElementById('card1content');
+  content.classList.add('visible');
+  content.innerHTML = `
+    <div class="card-content-row"><span class="card-content-label">Campaign</span><span class="card-content-val">${a.campaign_description ? a.campaign_description.slice(0,120)+'…' : '—'}</span></div>
+    <div class="card-content-row"><span class="card-content-label">Why now</span><span class="card-content-val">${a.raise_reason_now ? a.raise_reason_now.slice(0,100)+'…' : '—'}</span></div>
+    <div class="card-content-row"><span class="card-content-label">Goal</span><span class="card-content-val"><strong>$${Number(a.funding_goal||0).toLocaleString()}</strong></span></div>
+    <div class="card-content-row"><span class="card-content-label">Platform</span><span class="card-content-val">${platformNote}</span></div>
+    <div class="card-content-row"><span class="card-content-label">Funds cover</span><span class="card-content-val">${coverage}</span></div>`;
+}
+
+function populateCard2() {
+  const a = state.answers;
+  const networkLabels = {
+    friends_family: 'Friends & family', colleagues: 'Former colleagues',
+    customers: 'Existing customers', industry: 'Industry contacts',
+    online_community: 'Online community', email_list: 'Email list',
+    social: 'Social following', none: 'None yet'
+  };
+  const contactLabels = {
+    dm: 'Direct messages', email: 'Email', social_post: 'Social post',
+    in_person: 'In-person', not_sure: 'Not sure'
+  };
+  const networks = Array.isArray(a.backer_networks)
+    ? a.backer_networks.map(v => networkLabels[v] || v)
+    : [];
+  const contacts = Array.isArray(a.backer_contact_preference)
+    ? a.backer_contact_preference.map(v => contactLabels[v] || v)
+    : [];
+
+  const sizeMap = {under_50:'Under 50', '50_200':'50–200', '200_500':'200–500', '500_1000':'500–1,000', '1000_plus':'1,000+'};
+
+  document.getElementById('card2placeholder').style.display = 'none';
+  document.getElementById('card2num').classList.add('populated');
+  const content = document.getElementById('card2content');
+  content.classList.add('visible');
+  content.innerHTML = `
+    <div class="card-content-row"><span class="card-content-label">Committed</span><span class="card-content-val"><strong>${a.committed_backers_count || 0}</strong> confirmed backers</span></div>
+    <div class="card-content-row"><span class="card-content-label">Networks</span><span class="card-content-val">${networks.map(n=>`<span class="card-tag purple">${n}</span>`).join('') || '—'}</span></div>
+    <div class="card-content-row"><span class="card-content-label">Reach</span><span class="card-content-val">${sizeMap[a.network_size_estimate] || '—'} people</span></div>
+    <div class="card-content-row"><span class="card-content-label">Outreach</span><span class="card-content-val">${contacts.map(c=>`<span class="card-tag teal">${c}</span>`).join('') || '—'}</span></div>`;
+}
+
+function populateCard3() {
+  const a = state.answers;
+  const lt = a.tier_lower || {};
+  const mt = a.tier_main || {};
+  const pt = a.tier_premium || {};
+  document.getElementById('card3placeholder').style.display = 'none';
+  document.getElementById('card3num').classList.add('populated');
+  const content = document.getElementById('card3content');
+  content.classList.add('visible');
+  content.innerHTML = `
+    <table class="tier-table">
+      <thead><tr><th>Tier</th><th>Price</th><th>Reward</th></tr></thead>
+      <tbody>
+        <tr><td><span class="tier-label lower">Lower</span></td><td>$${lt.price||'—'}</td><td>${lt.desc ? lt.desc.slice(0,60)+'…' : '—'}</td></tr>
+        <tr><td><span class="tier-label main">Main</span></td><td>$${mt.price||'—'}</td><td>${mt.desc ? mt.desc.slice(0,60)+'…' : '—'}</td></tr>
+        <tr><td><span class="tier-label prem">Premium</span></td><td>$${pt.price||'—'}</td><td>${pt.desc ? pt.desc.slice(0,60)+'…' : '—'}</td></tr>
+      </tbody>
+    </table>`;
+}
+
+function populateCard4() {
+  const a = state.answers;
+  const dateMap = {
+    this_month: 'This month', '1_2_months': '1–2 months',
+    '3_6_months': '3–6 months', not_sure: 'TBD'
+  };
+  const durationMap = {
+    '15':'15 days','30':'30 days','45':'45 days','60':'60 days', not_sure:'TBD'
+  };
+  const prepMap = {
+    lt_2wk:'< 2 weeks', '2_4wk':'2–4 weeks', '1_3mo':'1–3 months', '3mo_plus':'3+ months'
+  };
+
+  // Build prep timeline
+  const prep = a.pre_launch_timeline_preference;
+  const timelineItems = [];
+  if (prep === 'lt_2wk') {
+    timelineItems.push({ color: 'orange', text: 'Week 1: Contact committed backers directly — secure Day 1 pledges' });
+    timelineItems.push({ color: 'purple', text: 'Day before launch: Send personal outreach to full list' });
+    timelineItems.push({ color: 'teal', text: 'Launch day: Go live + social announcement' });
+  } else if (prep === '2_4wk') {
+    timelineItems.push({ color: 'purple', text: 'Weeks 1–2: Build and warm your pre-launch list' });
+    timelineItems.push({ color: 'orange', text: 'Week 3: Direct outreach to committed backers — confirm pledges' });
+    timelineItems.push({ color: 'purple', text: 'Week 4: Soft launch teaser + platform setup' });
+    timelineItems.push({ color: 'teal', text: 'Launch day: Go live + activate full network' });
+  } else {
+    timelineItems.push({ color: 'purple', text: 'Month 1: Build pre-launch email list + social presence' });
+    timelineItems.push({ color: 'orange', text: 'Month 2: Confirm committed backers, create reward assets' });
+    timelineItems.push({ color: 'purple', text: '2 weeks before: Platform page live, soft-launch to list' });
+    timelineItems.push({ color: 'teal', text: 'Launch day: Full network activation, press outreach' });
+  }
+
+  document.getElementById('card4placeholder').style.display = 'none';
+  document.getElementById('card4num').classList.add('populated');
+  const content = document.getElementById('card4content');
+  content.classList.add('visible');
+  content.innerHTML = `
+    <div class="card-content-row"><span class="card-content-label">Launch</span><span class="card-content-val">${dateMap[a.target_launch_date]||'—'}</span></div>
+    <div class="card-content-row"><span class="card-content-label">Duration</span><span class="card-content-val">${durationMap[a.campaign_duration]||'—'}</span></div>
+    <div class="card-content-row"><span class="card-content-label">Prep time</span><span class="card-content-val">${prepMap[a.pre_launch_timeline_preference]||'—'}</span></div>
+    <ul class="timeline-list">
+      ${timelineItems.map(t=>`<li><div class="tl-dot ${t.color}"></div><span>${t.text}</span></li>`).join('')}
+    </ul>`;
+}
+
+/* ── GAP DETECTION ───────────────────────────────────────────── */
+function checkGaps(stepDef) {
+  const a = state.answers;
+
+  // Gap 1: goal without rationale
+  if (stepDef.widget && stepDef.widget.key === 'funding_goal') {
+    if (a.funding_goal && !a.funding_goal_rationale) {
+      addGapProbe(`That goal is noted — do you have a cost breakdown behind it? The campaigns that hit their targets fastest tend to have a specific itemized figure. The Working Capital Estimator can build that with you.`);
+    }
+  }
+  // Gap 2: no committed backers
+  if (stepDef.widget && stepDef.widget.key === 'backer_networks') {
+    if (parseInt(a.committed_backers_count || 0) === 0) {
+      addGapProbe(`You're starting with zero committed backers — which is totally fixable before launch. Your backer strategy will map out exactly who to approach and in what order. The goal: get to 30% of your target before you go live.`);
+    }
+  }
+  // Gap 4: platform not sure
+  if (stepDef.widget && stepDef.widget.key === 'platform_preference') {
+    if (a.platform_preference === 'not_sure') {
+      addGapProbe(`Platform choice matters more than most people realize. Kickstarter is all-or-nothing — you only keep the money if you hit your goal. Indiegogo lets you keep whatever you raise. Wefunder and Republic are equity platforms — a completely different structure. Worth deciding before you set your goal.`);
+    }
+  }
+  // Gap 5: compressed timeline
+  if (stepDef.widget && stepDef.widget.key === 'pre_launch_timeline_preference') {
+    if (a.pre_launch_timeline_preference === 'lt_2wk' && parseInt(a.committed_backers_count || 0) < 10) {
+      addGapProbe(`Two weeks with a small committed list is tight. The campaigns that launch strong usually spend 4–6 weeks on pre-launch list building first. Even one extra week of personal outreach could meaningfully change your Day 1 numbers.`);
+    }
+  }
+}
+
+/* ── MAIN FLOW ENGINE ────────────────────────────────────────── */
+async function advance(userAnswer) {
+  const currentDef = SCRIPT[state.step];
+  if (!currentDef) return;
+
+  // Remove widget
+  removeCurrentWidget();
+
+  // Record answer
+  if (currentDef.widget && userAnswer) {
+    state.answers[currentDef.widget.key] = userAnswer.value;
+    if (userAnswer.subValue) {
+      state.answers[currentDef.widget.subKey || currentDef.widget.key + '_rationale'] = userAnswer.subValue;
+    }
+    // Echo user answer
+    addUserMsg(userAnswer.label);
+  }
+
+  // Check gaps
+  if (currentDef.widget && userAnswer) {
+    checkGaps(currentDef);
+  }
+
+  // Run afterFn
+  if (currentDef.afterFn && typeof window[currentDef.afterFn] === 'function') {
+    window[currentDef.afterFn]();
+  }
+
+  // Advance step
+  state.step = currentDef.next !== undefined ? currentDef.next : state.step + 1;
+  renderProgress();
+
+  if (state.step >= SCRIPT.length) {
+    // Complete
+    document.getElementById('completePanel').style.display = 'block';
+    scrollToBottom();
+    return;
+  }
+
+  const nextDef = SCRIPT[state.step];
+
+  // Typing delay
+  await showTyping(700 + Math.random() * 400);
+
+  // Show messages
+  if (nextDef.messages) {
+    for (const msg of nextDef.messages) {
+      addAgentMsg(msg);
+    }
+  }
+
+  // Show complete state
+  if (nextDef.type === 'complete') {
+    document.getElementById('completePanel').style.display = 'block';
+    scrollToBottom();
+    return;
+  }
+
+  // Render widget
+  if (nextDef.widget) {
+    renderWidget(nextDef.widget, (answer) => advance(answer));
+  }
+}
+
+/* ── EXPORT ──────────────────────────────────────────────────── */
+function exportPlan() {
+  const a = state.answers;
+  const nl = '\n';
+  let out = `POPSTART — CROWDFUNDING PRE-LAUNCH ACTION PLAN${nl}${'='.repeat(50)}${nl}${nl}`;
+
+  out += `CAMPAIGN BRIEF${nl}${'-'.repeat(30)}${nl}`;
+  out += `Campaign: ${a.campaign_description || '—'}${nl}`;
+  out += `Why now: ${a.raise_reason_now || '—'}${nl}`;
+  out += `Goal: $${Number(a.funding_goal||0).toLocaleString()}${nl}`;
+  if (a.funding_goal_rationale) out += `Rationale: ${a.funding_goal_rationale}${nl}`;
+  out += `Platform: ${a.platform_preference || '—'}${nl}`;
+  out += `Funds cover: ${Array.isArray(a.coverage_need) ? a.coverage_need.join(', ') : (a.coverage_need||'—')}${nl}${nl}`;
+
+  out += `COMMITTED BACKER STRATEGY${nl}${'-'.repeat(30)}${nl}`;
+  out += `Committed backers: ${a.committed_backers_count || 0}${nl}`;
+  out += `Networks: ${Array.isArray(a.backer_networks) ? a.backer_networks.join(', ') : '—'}${nl}`;
+  out += `Estimated reach: ${a.network_size_estimate || '—'}${nl}`;
+  out += `Outreach approach: ${Array.isArray(a.backer_contact_preference) ? a.backer_contact_preference.join(', ') : '—'}${nl}${nl}`;
+
+  out += `REWARD TIERS${nl}${'-'.repeat(30)}${nl}`;
+  const lt = a.tier_lower || {};
+  const mt = a.tier_main || {};
+  const pt = a.tier_premium || {};
+  out += `Lower ($${lt.price||'—'}): ${lt.desc||'—'}${nl}`;
+  out += `Main ($${mt.price||'—'}): ${mt.desc||'—'}${nl}`;
+  out += `Premium ($${pt.price||'—'}): ${pt.desc||'—'}${nl}${nl}`;
+
+  out += `LAUNCH TIMELINE${nl}${'-'.repeat(30)}${nl}`;
+  out += `Target launch: ${a.target_launch_date || '—'}${nl}`;
+  out += `Campaign duration: ${a.campaign_duration || '—'} days${nl}`;
+  out += `Prep time available: ${a.pre_launch_timeline_preference || '—'}${nl}`;
+  out += `Network contact order: ${a.network_contact_order || '—'}${nl}`;
+
+  const blob = new Blob([out], {type: 'text/plain'});
+  const url = URL.createObjectURL(blob);
+  const a2 = document.createElement('a');
+  a2.href = url; a2.download = 'crowdfunding-prelaunch-plan.txt';
+  a2.click();
+  URL.revokeObjectURL(url);
+}
+
+function startOver() {
+  state.step = 0;
+  state.answers = {};
+  document.getElementById('chatArea').querySelectorAll('.message, .gap-probe, .input-widget').forEach(e => e.remove());
+  document.getElementById('completePanel').style.display = 'none';
+  ['1','2','3','4'].forEach(n => {
+    document.getElementById(`card${n}placeholder`).style.display = 'block';
+    document.getElementById(`card${n}content`).classList.remove('visible');
+    document.getElementById(`card${n}content`).innerHTML = '';
+    document.getElementById(`card${n}num`).classList.remove('populated');
+  });
+  renderProgress();
+  init();
+}
+
+/* ── INIT ────────────────────────────────────────────────────── */
+async function init() {
+  renderProgress();
+  await showTyping(600);
+  const def = SCRIPT[0];
+  if (def.messages) {
+    for (const msg of def.messages) {
+      addAgentMsg(msg);
+    }
+  }
+  state.step = 1;
+  renderProgress();
+  await showTyping(800);
+  const next = SCRIPT[1];
+  if (next.messages) {
+    for (const msg of next.messages) {
+      addAgentMsg(msg);
+    }
+  }
+  renderWidget(next.widget, (answer) => advance(answer));
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
